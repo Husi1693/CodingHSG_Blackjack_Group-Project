@@ -1,0 +1,57 @@
+import random
+
+#before we start coding, lets plan the game and describe what it should do
+
+#Cards of the Dealer
+#Cards of the Player
+#we need a dealing phase where the dealer and the player get their cards
+#we need the values of the cards to determine our futher actions
+#we need to compare the sum of the values to determine the winner
+#we need to define the rules by which the game is won or lost
+    #if sum of P > 21 -> Lose
+    #if sum of P = 21 -> Blackjack!
+    #if sum of P < 21 -> stay or hit
+    #if P choses hit -> new comparison
+    #if sum P < 21 && > sum D -> Win
+    #if sum P < D -> Lose
+    
+DCards = []
+PCards = []
+
+#We need to deal the cards for the Dealer
+while len(DCards) != 2: 
+    DCards.append(random.randint(1, 11)) #We basically just append a random integer to the hand according to the traditional game rules
+    if len(DCards) == 2:
+        print("Dealer has X &", DCards[1]) #We don't know the second card before we make our decision
+
+#In the next step we reproduce the code for the Player as well
+while len(PCards) != 2: 
+    PCards.append(random.randint(1, 11)) #We basically just append a random integer to the hand according to the traditional game rules
+    if len(PCards) == 2:
+        print("You have:", PCards)
+        
+#We need to know the sums of the cards
+if sum(DCards) == 21:
+    print("Dealer has 21, thats Blackjack!")
+elif sum(DCards) > 21:
+    print("Dealer has drawn to bust")
+    
+#We need to know the sum of the Players cards as well and compare the values and display it
+while sum(PCards) < 21:
+    action = str(input("hit or stay? ")) #we need to implement the decision based on the value and another random integer will be added
+    if action == "hit":
+        PCards.append(random.randint(1, 11))
+        print("You now have a total of " + str(sum(PCards)) + "from these cards", PCards)
+    else:
+        print("The Dealer has a sum of " + str(sum(DCards)) + "with ", DCards)
+        print("You have a sum of " + str(sum(PCards)) + "with", PCards)
+        if sum(DCards) > sum(PCards):
+            print("You lost, Dealer wins")
+        else:
+            print("You win, Dealer lost, Congrats!")
+            break
+
+if sum(PCards) > 21:
+    print("You busted, sorry, Dealer wins.")
+elif sum(PCards) == 21:
+    print("You have BlackJack!! You win! 21!")
